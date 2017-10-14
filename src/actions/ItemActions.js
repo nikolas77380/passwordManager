@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
-import { ITEM_UPDATE, ITEM_CREATION, ITEMS_FETCH_SUCCESS } from './types';
+import { ITEM_UPDATE, ITEM_CREATE, ITEMS_FETCH_SUCCESS } from './types';
 
 
 export const itemUpdate = ({ prop, value}) => {
@@ -16,7 +16,7 @@ export const itemCreation = ({ site, login, site_password }) => {
   return (dispatch) => {
       firebase.database().ref(`/users/${currentUser.uid}/sites`).push({site, login, site_password})
       .then(() => {
-        dispatch({ type: ITEM_CREATION })
+        dispatch({ type: ITEM_CREATE });
         Actions.ItemList({ type: 'reset' })
       });
   };
