@@ -2,14 +2,17 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-
 import { getItems } from '../actions';
-
+import ListItem from './ListItem';
 class ItemList extends Component {
 
   componentWillMount() {
     this.props.getItems();
   }
+
+  _renderItem = ({item}) => (
+    <ListItem item={item} />
+  );
 
   _keyExtractor = (item, index) => item.uid;
 
@@ -18,7 +21,7 @@ class ItemList extends Component {
       <FlatList
         keyExtractor={this._keyExtractor}
         data={this.props.items}
-        renderItem={({item}) => <Text>{item.site}</Text>}
+        renderItem={ this._renderItem }
       />
     )
   }
