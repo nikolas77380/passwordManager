@@ -31,6 +31,7 @@ const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => 
     <View style={styles.InputContainerStyle}>
       <Text style={styles.labelStyle}>{label}</Text>
       <TextInput
+        autoCapitalize="none"
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
         placeholderTextColor="#fff"

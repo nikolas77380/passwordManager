@@ -27,6 +27,7 @@ const AuthInput = ({ label, value, onChangeText, placeholder, secureTextEntry })
   return (
     <View style={styles.InputContainerStyle}>
       <TextInput
+        autoCapitalize="none"
         placeholderTextColor="#fff"
         secureTextEntry={secureTextEntry}
         placeholder={placeholder}
