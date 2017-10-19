@@ -1,37 +1,67 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import { getItems } from '../actions';
+import { getItems, searchSite } from '../actions';
+import { SearchInput, Spinner } from './common';
 import ListItem from './ListItem';
+
 class ItemList extends Component {
 
   componentWillMount() {
     this.props.getItems();
   }
 
-  _renderItem = ({item}) => (
-    <ListItem item={item} />
-  );
+  onSearchChange(text) {
+    this.props.searchSite(text);
+  }
 
-  _keyExtractor = (item, index) => item.uid;
+  keyExtractor = (item) => item.uid;
+
+  renderItem({ item }) {
+    return (
+      <ListItem item={item} />
+    );
+  }
+
+  renderList() {
+    if (this.props.loading) {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', marginTop: 50 }}>
+              <Spinner size="large" />
+            </View>
+        );
+    }
+    return (
+      <FlatList
+          keyExtractor={this.keyExtractor}
+          data={this.props.items}
+          extraData={this.state}
+          renderItem={this.renderItem}
+      />
+      );
+  }
 
   render() {
     return (
-      <FlatList
-        keyExtractor={this._keyExtractor}
-        data={this.props.items}
-        renderItem={ this._renderItem }
-      />
-    )
+      <View style={{ paddingBottom: 60 }}>
+        <SearchInput value={this.props.searchText} onChangeText={this.onSearchChange.bind(this)} />
+        {this.renderList()}
+      </View>
+    );
   }
 }
 
 const mapStateToProps = state => {
-  const items = _.map(state.items, (val, uid) => {
-    return { ...val, uid }
+  const items = _.map(state.items.items, (val, uid) => {
+        return { ...val, uid }
   });
-  return { items };
+  const searchText = state.search.searchText;
+  if (searchText) {
+const filteredItems = _.filter(items, item => item.site.toLowerCase().includes(searchText.toLowerCase()));
+    return { items: filteredItems, searchText: state.search.searchText }
+  }
+  return { items, searchText: state.search.searchText, loading: state.items.loading };
 };
 
-export default connect(mapStateToProps, { getItems })(ItemList);
+export default connect(mapStateToProps, { getItems, searchSite })(ItemList);

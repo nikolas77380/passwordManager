@@ -6,3 +6,6 @@ export const LOGIN_USER = 'login_user';
 export const ITEM_UPDATE = 'item_update';
 export const ITEM_CREATE = 'item_create';
 export const ITEMS_FETCH_SUCCESS = 'items_fetch_success';
+export const ITEM_SAVING = 'item_saving';
+export const SEARCH_UPDATE = 'search_update';
+export const LOADING = 'loading';

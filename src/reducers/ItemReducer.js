@@ -1,22 +1,20 @@
-import { ITEM_UPDATE, ITEM_CREATION, ITEMS_FETCH_SUCCESS } from '../actions/types';
+import { ITEM_UPDATE, ITEM_CREATE, ITEM_SAVING } from '../actions/types';
 
 const INITIAL_STATE = {
   site: '',
   login: '',
-  site_password: ''
+  sitePassword: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case ITEM_UPDATE:
       return { ...state, [action.payload.prop]: action.payload.value };
-    case ITEM_CREATION:
+    case ITEM_CREATE:
       return INITIAL_STATE;
-    case ITEMS_FETCH_SUCCESS:
-    // console.log(action);
-      return action.payload;
+    case ITEM_SAVING :
+      return INITIAL_STATE;
     default:
       return state;
   }
-
-}
+};

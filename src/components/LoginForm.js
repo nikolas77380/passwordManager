@@ -19,8 +19,10 @@ class LoginForm extends Component {
   }
 
   renderButton() {
-    if (this.props.loading ) {
-      return <Spinner size="large" />
+    if (this.props.loading) {
+      return (
+         <Spinner size="large" />
+      );
     }
 
     return (
@@ -33,13 +35,15 @@ class LoginForm extends Component {
   render() {
     return (
       <Card>
-        <Text style={{color: '#fff',
-                      fontWeight: '500',
-                      alignSelf: 'center',
-                      fontSize:26,
-                      marginBottom:100
-                    }}>
-              Welcome to PassKiper
+        <Text
+          style={{ color: '#fff',
+                   fontWeight: '500',
+                   textAlign: 'center',
+                   fontSize: 26,
+                   marginBottom: 100
+                }}
+        >
+              PassKiper
         </Text>
         <CardSection>
           <AuthInput
@@ -59,26 +63,32 @@ class LoginForm extends Component {
               onChangeText={this.onPasswordChange.bind(this)}
           />
         </CardSection>
-        <Text style={{color: 'red', fontSize: 20, alignSelf: 'center'}}>
+        <Text style={{ color: 'red', fontSize: 20, alignSelf: 'center' }} >
           {this.props.error}
         </Text>
         <CardSection>
           {this.renderButton()}
         </CardSection>
-          <Text style={{color: '#fff', fontWeight: '500', alignSelf: 'center', marginTop: 15}}>Forgot Password?</Text>
+          <Text
+              style={{
+                color: '#fff',
+                fontWeight: '500',
+                alignSelf: 'center',
+                marginTop: 15 }}
+          >Forgot Password?</Text>
       </Card>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     email: state.auth.email,
     password: state.auth.password,
     error: state.auth.error,
     user: state.auth.user,
     loading: state.auth.loading
-  }
+  };
 };
 
 export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(LoginForm);

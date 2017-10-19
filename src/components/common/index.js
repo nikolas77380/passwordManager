@@ -5,3 +5,5 @@ export * from './Header';
 export * from './Input';
 export * from './AuthInput';
 export * from './Spinner';
+export * from './SearchInput';
+export * from './Confirm';
