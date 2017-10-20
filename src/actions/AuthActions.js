@@ -5,7 +5,8 @@ import { EMAIL_CHANGED,
          PASSWORD_CHANGED,
          LOGIN_USER_SUCCESS,
          LOGIN_USER_FAIL,
-         LOGIN_USER
+         LOGIN_USER,
+         LOGOUT_USER
        } from './types';
 
 export const emailChanged = (text) => {
@@ -45,6 +46,11 @@ const loginUserSuccess = (dispatch, user) => {
     type: LOGIN_USER_SUCCESS,
     payload: user
   });
-
   Actions.main();
+};
+
+export const logoutUser = () => {
+  return (dispatch) => {
+      dispatch({ type: LOGOUT_USER });
+  };
 };

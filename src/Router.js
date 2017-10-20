@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import Icon from 'react-native-fa-icons';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './components/LoginForm';
 import ItemList from './components/ItemList';
@@ -11,7 +10,13 @@ const RouterComponent = () => {
   return (
     <Router sceneStyle={styles.routerStyle}>
         <Scene key="auth" hideNavBar={1} >
-          <Scene key="login" component={LoginForm} title="Please Login" initial />
+          <Scene
+            key="login"
+            component={LoginForm}
+            title="Please Login"
+            initial
+
+          />
         </Scene>
 
         <Scene key="main">
@@ -26,7 +31,7 @@ const RouterComponent = () => {
             rightTitle="Add"
             leftTitle="Log Out"
             onRight={() => Actions.ItemCreate()}
-            onLeft={() => Actions.auth()}
+            onLeft={() => Actions.auth({ type: 'reset' })}
             initial
           />
           <Scene

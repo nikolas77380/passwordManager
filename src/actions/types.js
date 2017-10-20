@@ -3,6 +3,7 @@ export const PASSWORD_CHANGED = 'password_changed';
 export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
+export const LOGOUT_USER = 'logout_user';
 export const ITEM_UPDATE = 'item_update';
 export const ITEM_CREATE = 'item_create';
 export const ITEMS_FETCH_SUCCESS = 'items_fetch_success';
