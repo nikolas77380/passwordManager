@@ -25,7 +25,6 @@ const styles = {
 };
 
 const Button = (props) => {
-
   return (
     <TouchableOpacity onPress={props.onPress} style={styles.buttonStyle}>
       <Text style={styles.textStyle}>

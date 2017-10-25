@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import ItemForm from './ItemForm';
 import { itemUpdate, itemSaving } from '../actions';
 import { Card, CardSection, Button } from './common';
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    paddingTop: 65
+  }
+});
 
 class ItemEdit extends Component {
   componentWillMount() {
@@ -19,6 +28,7 @@ class ItemEdit extends Component {
 
   render() {
     return (
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
         <Card>
           <ItemForm {...this.props} />
           <CardSection>
@@ -27,6 +37,7 @@ class ItemEdit extends Component {
             </Button>
           </CardSection>
         </Card>
+      </LinearGradient>
     );
   }
 }

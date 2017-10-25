@@ -5,7 +5,9 @@ import { ITEM_UPDATE,
          ITEMS_FETCH_SUCCESS,
          ITEM_SAVING,
          SEARCH_UPDATE,
-         LOADING } from './types';
+         EMPTY_FIELD_ERROR,
+         LOADING,
+         RESET_FORM } from './types';
 
 
 export const itemUpdate = ({ prop, value }) => {
@@ -19,11 +21,16 @@ export const itemCreation = ({ site, login, sitePassword }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-      firebase.database().ref(`/users/${currentUser.uid}/sites`).push({ site, login, sitePassword })
-      .then(() => {
-        dispatch({ type: ITEM_CREATE });
-        Actions.ItemList({ type: 'reset' });
-      });
+      if (!site || !login || sitePassword) {
+        dispatch({ type: EMPTY_FIELD_ERROR, payload: 'You have empty fields' });
+      } else {
+        firebase.database().ref(`/users/${currentUser.uid}/sites`)
+        .push({ site, login, sitePassword })
+        .then(() => {
+          dispatch({ type: ITEM_CREATE });
+          Actions.ItemList({ type: 'reset' });
+        });
+      }
   };
 };
 
@@ -42,7 +49,7 @@ export const itemSaving = ({ site, login, sitePassword, uid }) => {
 
 export const itemDelete = ({ uid }) => {
   const { currentUser } = firebase.auth();
-  
+
   return () => {
     firebase.database().ref(`/users/${currentUser.uid}/sites/${uid}`).remove()
     .then(() => {
@@ -60,6 +67,12 @@ export const getItems = () => {
       .on('value', snapshot => {
         dispatch({ type: ITEMS_FETCH_SUCCESS, payload: snapshot.val() });
       });
+  };
+};
+
+export const ResetForm = () => {
+  return (dispatch) => {
+    dispatch({ type: RESET_FORM });
   };
 };
 

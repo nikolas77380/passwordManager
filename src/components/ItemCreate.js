@@ -1,14 +1,22 @@
 import React, { Component } from 'react';
+import { StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 import { Card, CardSection, Button } from './common';
-import { itemCreation } from '../actions';
+import { itemCreation, ResetForm } from '../actions';
 import ItemForm from './ItemForm';
 
+const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    paddingTop: 65
+  }
+});
 
 class ItemCreate extends Component {
 
   componentWillMount() {
-
+    this.props.ResetForm();
   }
 
   onButtonPress() {
@@ -18,6 +26,7 @@ class ItemCreate extends Component {
 
   render() {
     return (
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
         <Card>
           <ItemForm />
           <CardSection>
@@ -26,14 +35,14 @@ class ItemCreate extends Component {
             </Button>
           </CardSection>
         </Card>
+      </LinearGradient>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   const { site, login, sitePassword } = state.formFields;
   return { site, login, sitePassword };
 };
 
-export default connect(mapStateToProps, { itemCreation })(ItemCreate);
+export default connect(mapStateToProps, { itemCreation, ResetForm })(ItemCreate);

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { TextInput, View, Text } from 'react-native';
+import React from 'react';
+import { TextInput, View } from 'react-native';
+
 const styles = {
   InputContainerStyle: {
     height: 40,
@@ -21,12 +22,14 @@ const styles = {
     flex: 2
   }
 
-}
-const AuthInput = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
+};
+
+const AuthInput = ({ value, onChangeText, placeholder, secureTextEntry, autoFocus }) => {
 
   return (
     <View style={styles.InputContainerStyle}>
       <TextInput
+        autoFocus={autoFocus}
         autoCapitalize="none"
         placeholderTextColor="#fff"
         secureTextEntry={secureTextEntry}

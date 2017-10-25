@@ -3,13 +3,13 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
-import { emailChanged, passwordChanged, loginUser, logoutUser } from '../actions';
+import { emailChanged, passwordChanged, ConfirmPasswordChanged, RegisterUser } from '../actions';
 import { Card, CardSection, AuthInput, Button, Spinner } from './common';
 import { AuthStyle } from '../styles/AuthStyle';
 
-class LoginForm extends Component {
+class RegistrationForm extends Component {
   componentWillMount() {
-    this.props.logoutUser();
+
   }
   onEmailChange(text) {
     this.props.emailChanged(text);
@@ -18,10 +18,13 @@ class LoginForm extends Component {
   onPasswordChange(text) {
     this.props.passwordChanged(text);
   }
+  onConfirmPasswordChange(text) {
+    this.props.ConfirmPasswordChanged(text);
+  }
 
-  loginUser() {
-    const { email, password } = this.props;
-    this.props.loginUser({ email, password });
+  RegisterUser() {
+    const { email, password, ConfirmPassword } = this.props;
+    this.props.RegisterUser({ email, password, ConfirmPassword });
   }
 
   renderButton() {
@@ -32,8 +35,8 @@ class LoginForm extends Component {
     }
 
     return (
-      <Button onPress={this.loginUser.bind(this)}>
-        Login
+      <Button onPress={this.RegisterUser.bind(this)}>
+        Register
       </Button>
     );
   }
@@ -74,37 +77,37 @@ class LoginForm extends Component {
               onChangeText={this.onPasswordChange.bind(this)}
           />
         </CardSection>
+
+        <CardSection>
+          <AuthInput
+              value={this.props.ConfirmPassword}
+              secureTextEntry
+              label="Password"
+              placeholder="Confirm Password"
+              onChangeText={this.onConfirmPasswordChange.bind(this)}
+          />
+
+        </CardSection>
         <Text style={AuthStyle.error} >
           {this.props.error}
         </Text>
         <CardSection>
           {this.renderButton()}
         </CardSection>
-        <TouchableOpacity>
-          <Text
-              style={{
-                color: '#fff',
-                fontWeight: '500',
-                alignSelf: 'center',
-                backgroundColor: 'transparent',
-                marginTop: 15 }}
-          >Forgot Password?</Text>
-          </TouchableOpacity>
       </Card>
       <View
         style={AuthStyle.footer}
       >
-      <TouchableOpacity onPress={() => Actions.Registration()}>
+      <TouchableOpacity onPress={() => Actions.login()} >
         <Text
               style={{
-
                 color: '#fff',
                 fontWeight: '500',
                 alignSelf: 'center',
                 backgroundColor: 'transparent',
                 marginTop: 150 }}
         >
-          Registration
+          Login
         </Text>
         </TouchableOpacity>
         </View>
@@ -117,6 +120,7 @@ const mapStateToProps = (state) => {
   return {
     email: state.auth.email,
     password: state.auth.password,
+    ConfirmPassword: state.auth.ConfirmPassword,
     error: state.auth.error,
     user: state.auth.user,
     loading: state.auth.loading
@@ -126,5 +130,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps,
                       { emailChanged,
                         passwordChanged,
-                        loginUser,
-                        logoutUser })(LoginForm);
+                        ConfirmPasswordChanged,
+                        RegisterUser })(RegistrationForm);

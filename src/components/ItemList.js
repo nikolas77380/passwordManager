@@ -1,10 +1,18 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, StyleSheet } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { getItems, searchSite } from '../actions';
-import { SearchInput, Spinner } from './common';
-import ListItem from './ListItem';
+import { Spinner } from './common';
+import SingleItem from './SingleItem';
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    flex: 1,
+    paddingTop: 65
+  }
+});
 
 class ItemList extends Component {
 
@@ -12,15 +20,11 @@ class ItemList extends Component {
     this.props.getItems();
   }
 
-  onSearchChange(text) {
-    this.props.searchSite(text);
-  }
-
   keyExtractor = (item) => item.uid;
 
   renderItem({ item }) {
     return (
-      <ListItem item={item} />
+      <SingleItem item={item} />
     );
   }
 
@@ -44,24 +48,28 @@ class ItemList extends Component {
 
   render() {
     return (
-      <View style={{ paddingBottom: 60 }}>
-        <SearchInput value={this.props.searchText} onChangeText={this.onSearchChange.bind(this)} />
-        {this.renderList()}
-      </View>
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
+        <View style={{ paddingBottom: 5, flex: 1 }}>
+          {this.renderList()}
+        </View>
+      </LinearGradient>
     );
   }
 }
 
 const mapStateToProps = state => {
   const items = _.map(state.items.items, (val, uid) => {
-        return { ...val, uid }
+        return { ...val, uid };
   });
   const searchText = state.search.searchText;
   if (searchText) {
-const filteredItems = _.filter(items, item => item.site.toLowerCase().includes(searchText.toLowerCase()));
-    return { items: filteredItems, searchText: state.search.searchText }
+    const filteredItems = _.filter(
+                             items, item => item.site.toLowerCase()
+                             .includes(searchText.toLowerCase())
+                           );
+    return { items: filteredItems, searchText: state.search.searchText };
   }
-  return { items, searchText: state.search.searchText, loading: state.items.loading };
+  return { items, loading: state.items.loading };
 };
 
 export default connect(mapStateToProps, { getItems, searchSite })(ItemList);

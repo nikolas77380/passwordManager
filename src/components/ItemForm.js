@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { itemUpdate } from '../actions';
 import { CardSection, Input } from './common';
+
+const styles = StyleSheet.create({
+  ErrorWrapper: {
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  ErrorText: {
+    color: '#8b0000',
+    fontSize: 18
+  }
+});
 
 class ItemForm extends Component {
     render() {
@@ -34,14 +46,17 @@ class ItemForm extends Component {
             value={this.props.sitePassword}
           />
           </CardSection>
+          <CardSection style={styles.ErrorWrapper} >
+            <Text style={styles.ErrorText}>{this.props.error}</Text>
+          </CardSection>
         </View>
       );
     }
 }
 
 const mapStateToProps = (state) => {
-  const { site, login, sitePassword } = state.formFields;
-  return { site, login, sitePassword };
+  const { site, login, sitePassword, error } = state.formFields;
+  return { site, login, sitePassword, error };
 };
 
 export default connect(mapStateToProps, { itemUpdate })(ItemForm);
