@@ -12,16 +12,17 @@ import SearchComponent from './components/SearchComponent';
 const styles = StyleSheet.create({
     navigationBarStyle: {
       backgroundColor: 'transparent',
-      marginBottom: 10,
-      padding: 5
+      paddingBottom: 5,
+      borderBottomWidth: 0
     },
     navigationTitleStyle: {
       color: '#fff',
       fontSize: 18,
-      fontWeight: '400'
+      fontWeight: '400',
     },
     whiteText: {
-      color: '#fff'
+      color: '#fff',
+      marginTop: 5
     },
     iconStyle: {
       fontSize: 22,
@@ -32,7 +33,6 @@ class RouterComponent extends Component {
 
    render() {
      return (
-
        <Router sceneStyle={styles.routerStyle}>
            <Scene key="auth" hideNavBar={1} >
              <Scene
@@ -52,15 +52,15 @@ class RouterComponent extends Component {
              <Scene
                navigationBarStyle={styles.navigationBarStyle}
                titleStyle={styles.navigationTitleStyle}
-               leftButtonTextStyle={styles.whiteText}
                rightButtonTextStyle={styles.whiteText}
+               leftButtonTextStyle={styles.whiteText}
                key="ItemList"
                title={<SearchComponent />}
                component={ItemList}
-               rightTitle={<Icon name="plus" style={styles.iconStyle} />}
-               leftTitle={<Icon name="sign-out" style={styles.iconStyle} />}
-               onRight={() => Actions.ItemCreate()}
-               onLeft={() => Actions.auth({ type: 'reset' })}
+               leftTitle={<Icon name="plus" style={styles.iconStyle} />}
+               rightTitle={<Icon name="sign-out" style={styles.iconStyle} />}
+               onLeft={() => Actions.ItemCreate()}
+               onRight={() => Actions.auth({ type: 'reset' })}
                initial
              />
              <Scene
@@ -82,7 +82,6 @@ class RouterComponent extends Component {
                title="Edit Site"
              />
            </Scene>
-
        </Router>
      );
    }

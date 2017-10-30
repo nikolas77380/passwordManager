@@ -1,23 +1,68 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, Modal, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { getItems, searchSite } from '../actions';
-import { Spinner } from './common';
+import { Spinner, CardSection, AuthInput, Button } from './common';
+import { ItemStyle } from '../styles/ItemStyle';
 import SingleItem from './SingleItem';
-
-const styles = StyleSheet.create({
-  linearGradient: {
-    flex: 1,
-    paddingTop: 65
-  }
-});
 
 class ItemList extends Component {
 
+  state = {
+    keyPhrase: '',
+    keyPhrasePopupShow: false
+  }
+
   componentWillMount() {
     this.props.getItems();
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('@MySuperStore:keyPhrase').then(
+      (value) => {
+          if (value !== null) {
+            this.setState({ keyPhrasePopupShow: false, keyPhrase: JSON.stringify(value) });
+          } else {
+              this.setState({ keyPhrasePopupShow: true });
+          }
+        });
+  }
+
+  async onKeyInserted() {
+    try {
+      await AsyncStorage.setItem('@MySuperStore:keyPhrase', JSON.stringify(this.state.keyPhrase),
+        () => {
+          this.setState({ keyPhrasePopupShow: false });
+          AsyncStorage.getItem('@MySuperStore:keyPhrase').then(
+            (value) => {
+                console.log(value);
+            }
+          );
+        });
+    } catch (error) {
+      // Error saving data
+    }
+  }
+
+  onKeyChanged(text) {
+    this.setState({ keyPhrase: text });
+  }
+
+  async getKeyPhrase() {
+    try {
+      await AsyncStorage.getItem('@MySuperStore:keyPhrase').then((value) => {
+        this.setState({ keyPhrasePopupShow: false, keyPhrase: value });
+          if (value !== null) {
+            this.setState({ keyPhrasePopupShow: false, keyPhrase: value });
+          } else {
+              this.setState({ keyPhrasePopupShow: true });
+          }
+        });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   keyExtractor = (item) => item.uid;
@@ -48,9 +93,30 @@ class ItemList extends Component {
 
   render() {
     return (
-      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
-        <View style={{ paddingBottom: 5, flex: 1 }}>
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={ItemStyle.linearGradient}>
+        <View style={{ paddingBottom: 5, paddingTop: 10, flex: 1 }}>
           {this.renderList()}
+          <Modal
+            visible={this.state.keyPhrasePopupShow}
+            transparent
+            animationType="fade"
+            onRequestClose={() => {}} // required for android
+          >
+            <View style={ItemStyle.DetailPopupContainer}>
+              <CardSection style={{ marginBottom: 20 }}>
+                <AuthInput
+                  icon="key"
+                  value={this.state.keyPhrase}
+                  placeholder="insert your secret key"
+                  secureTextEntry
+                  onChangeText={this.onKeyChanged.bind(this)}
+                />
+              </CardSection>
+              <CardSection style={ItemStyle.bottomSection} >
+                <Button onPress={this.onKeyInserted.bind(this)}>OK</Button>
+              </CardSection>
+            </View>
+          </Modal>
         </View>
       </LinearGradient>
     );

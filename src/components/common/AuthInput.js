@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput, View } from 'react-native';
+import Icon from 'react-native-fa-icons';
 
 const styles = {
   InputContainerStyle: {
@@ -7,15 +8,15 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: '#fff',
   },
   InputStyles: {
-    borderBottomWidth: 2,
-    borderColor: '#fff',
-    textAlign: 'center',
+    textAlign: 'left',
     color: '#fff',
+    marginLeft: 10,
     paddingRight: 5,
     paddingLeft: 5,
-    paddingBottom: 8,
     fontSize: 18,
     fontWeight: '400',
     lineHeight: 23,
@@ -24,10 +25,12 @@ const styles = {
 
 };
 
-const AuthInput = ({ value, onChangeText, placeholder, secureTextEntry, autoFocus }) => {
-
+const AuthInput = ({ value, onChangeText, placeholder, secureTextEntry, autoFocus, icon }) => {
   return (
     <View style={styles.InputContainerStyle}>
+      <View style={{ width: 20, alignItems: 'center' }} >
+        <Icon name={icon} style={{ color: '#fff', fontSize: 18 }} />
+      </View>
       <TextInput
         autoFocus={autoFocus}
         autoCapitalize="none"

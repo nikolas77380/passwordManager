@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
@@ -9,6 +9,7 @@ import { AuthStyle } from '../styles/AuthStyle';
 
 class LoginForm extends Component {
   componentWillMount() {
+    AsyncStorage.removeItem('@MySuperStore:keyPhrase');
     this.props.logoutUser();
   }
   onEmailChange(text) {
@@ -33,7 +34,7 @@ class LoginForm extends Component {
 
     return (
       <Button onPress={this.loginUser.bind(this)}>
-        Login
+        LOG IN
       </Button>
     );
   }
@@ -54,13 +55,13 @@ class LoginForm extends Component {
                    backgroundColor: 'transparent'
                 }}
         >
-              PassKiper
+              PassKeeper
         </Text>
         <CardSection>
           <AuthInput
               value={this.props.email}
-              label="email"
-              placeholder="email@gmail.com"
+              icon="envelope"
+              placeholder="Username"
               onChangeText={this.onEmailChange.bind(this)}
           />
         </CardSection>
@@ -68,8 +69,8 @@ class LoginForm extends Component {
         <CardSection>
           <AuthInput
               value={this.props.password}
+              icon="lock"
               secureTextEntry
-              label="Password"
               placeholder="Password"
               onChangeText={this.onPasswordChange.bind(this)}
           />
@@ -104,7 +105,7 @@ class LoginForm extends Component {
                 backgroundColor: 'transparent',
                 marginTop: 150 }}
         >
-          Registration
+          SIGN IN
         </Text>
         </TouchableOpacity>
         </View>

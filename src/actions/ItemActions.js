@@ -1,5 +1,6 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
+import { encrypt } from 'react-native-simple-encryption';
 import { ITEM_UPDATE,
          ITEM_CREATE,
          ITEMS_FETCH_SUCCESS,
@@ -17,13 +18,14 @@ export const itemUpdate = ({ prop, value }) => {
     };
 };
 
-export const itemCreation = ({ site, login, sitePassword }) => {
+export const itemCreation = ({ site, login, sitePasswordFree }) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
-      if (!site || !login || sitePassword) {
+      if (!site || !login || !sitePasswordFree) {
         dispatch({ type: EMPTY_FIELD_ERROR, payload: 'You have empty fields' });
       } else {
+        const sitePassword = encrypt('kiril', sitePasswordFree);
         firebase.database().ref(`/users/${currentUser.uid}/sites`)
         .push({ site, login, sitePassword })
         .then(() => {
@@ -34,9 +36,9 @@ export const itemCreation = ({ site, login, sitePassword }) => {
   };
 };
 
-export const itemSaving = ({ site, login, sitePassword, uid }) => {
+export const itemSaving = ({ site, login, sitePasswordFree, uid }) => {
   const { currentUser } = firebase.auth();
-
+  const sitePassword = encrypt('kiril', sitePasswordFree);
   return (dispatch) => {
     firebase.database().ref(`/users/${currentUser.uid}/sites/${uid}`)
     .set({ site, login, sitePassword })

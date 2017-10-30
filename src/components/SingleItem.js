@@ -1,51 +1,62 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import { decrypt, encrypt } from 'react-native-simple-encryption';
 import Swipeout from 'react-native-swipe-out';
 import { itemDelete } from '../actions';
+import { SingleItemStyle } from '../styles/ItemStyle';
 import { Confirm, DetailPopup } from './common';
-
-const styles = StyleSheet.create({
-  itemListStyle: {
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.4,
-    elevation: 2,
-    margin: 5
-
-  },
-  itemTextStyle: {
-    fontSize: 18,
-    alignSelf: 'center',
-    color: '#4c669f'
-  },
-  flexOne: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingLeft: 5,
-    paddingRight: 5,
-    flex: 1,
-  }
-});
 
 class SingleItem extends Component {
   state = {
     ConfirmVisible: false,
     DetailPopupVisible: false,
+    encrypted: true,
+    keyPhrase: ''
   }
 
   onEditPress() {
+    if (this.state.encrypted === false) {
+      this.props.item.sitePassword = encrypt(this.state.keyPhrase, this.props.item.sitePassword);
+      this.setState({ encrypted: true });
+    }
     this.setState({ DetailPopupVisible: false });
     Actions.ItemEdit({ site: this.props.item });
   }
 
   onRemovePress() {
     this.setState({ ConfirmVisible: true });
+  }
+
+  onShowPassword() {
+    AsyncStorage.getItem('@MySuperStore:keyPhrase').then(
+      (value) => {
+          if (value !== null) {
+            const key = JSON.parse(value);
+            if (this.state.encrypted === true) {
+                this.props.item.sitePassword = decrypt(key, this.props.item.sitePassword);
+                this.setState({ encrypted: false });
+            } else {
+              this.props.item.sitePassword = encrypt(key, this.props.item.sitePassword);
+              this.setState({ encrypted: true });
+            }
+          } else {
+            // open input keyPhrase popup
+          }
+        });
+  }
+
+  async getKeyPhrase() {
+    try {
+      const value = await AsyncStorage.getItem('@MySuperStore:keyPhrase');
+      if (value !== null) {
+        this.setState({ keyPhrase: value });
+      }
+    } catch (error) {
+      // this.setState({ keyPhrasePopupShow: true });
+      // Error retrieving data
+    }
   }
 
   showDetailedPopup() {
@@ -63,7 +74,10 @@ class SingleItem extends Component {
   }
 
   closePopup() {
-    this.setState({ DetailPopupVisible: false });
+    if (this.state.encrypted === false) {
+        this.props.item.sitePassword = encrypt(this.state.keyPhrase, this.props.item.sitePassword);
+    }
+      this.setState({ DetailPopupVisible: false, encrypted: true });
   }
 
   render() {
@@ -82,18 +96,18 @@ class SingleItem extends Component {
 
     ];
     return (
-      <View style={styles.itemListStyle}>
+      <View style={SingleItemStyle.itemListStyle}>
         <Swipeout
+            sencitivity={8}
             autoClose
             right={swipeoutBtns}
             backgroundColor="transparent"
-            style={{ borderTopRightRadius: 10, borderBottomRightRadius: 10 }}
         >
-          <View style={styles.flexOne}>
+          <View style={SingleItemStyle.flexOne}>
             <TouchableOpacity
               onPress={this.showDetailedPopup.bind(this)}
             >
-                <Text style={styles.itemTextStyle}>
+                <Text style={SingleItemStyle.itemTextStyle}>
                   {site}
                 </Text>
             </TouchableOpacity>
@@ -107,14 +121,15 @@ class SingleItem extends Component {
           Are you sure you want delete {site} information?
           </Confirm>
 
-          <DetailPopup
-            visible={this.state.DetailPopupVisible}
-            onEdit={this.onEditPress.bind(this)}
-            onDecline={this.closePopup.bind(this)}
-            site={site}
-            login={login}
-            sitePassword={sitePassword}
-          />
+            <DetailPopup
+              visible={this.state.DetailPopupVisible}
+              onEdit={this.onEditPress.bind(this)}
+              onDecline={this.closePopup.bind(this)}
+              onShowPassword={this.onShowPassword.bind(this)}
+              site={site}
+              login={login}
+              sitePassword={sitePassword}
+            />
 
         </Swipeout>
       </View>

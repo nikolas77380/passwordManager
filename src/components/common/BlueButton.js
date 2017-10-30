@@ -6,7 +6,7 @@ const styles = {
     linearGradient: {
       flex: 1,
       alignSelf: 'center',
-      borderRadius: 25,
+      borderRadius: 10,
       shadowColor: '#000',
       shadowOffset: { width: 5, height: 5 },
       shadowOpacity: 0.4,

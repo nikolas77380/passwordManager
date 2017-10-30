@@ -20,8 +20,8 @@ class ItemCreate extends Component {
   }
 
   onButtonPress() {
-      const { site, login, sitePassword } = this.props;
-      this.props.itemCreation({ site, login, sitePassword });
+      const { site, login, sitePasswordFree } = this.props;
+      this.props.itemCreation({ site, login, sitePasswordFree });
   }
 
   render() {
@@ -31,7 +31,7 @@ class ItemCreate extends Component {
           <ItemForm />
           <CardSection>
             <Button onPress={this.onButtonPress.bind(this)}>
-              Create
+              SAVE
             </Button>
           </CardSection>
         </Card>
@@ -42,7 +42,7 @@ class ItemCreate extends Component {
 
 const mapStateToProps = (state) => {
   const { site, login, sitePassword } = state.formFields;
-  return { site, login, sitePassword };
+  return { site, login, sitePasswordFree: sitePassword };
 };
 
 export default connect(mapStateToProps, { itemCreation, ResetForm })(ItemCreate);

@@ -6,7 +6,7 @@ const styles = {
       flex: 1,
       alignSelf: 'stretch',
       backgroundColor: '#fff',
-      borderRadius: 25,
+      borderRadius: 10,
       shadowColor: '#000',
       shadowOffset: { width: 5, height: 5 },
       shadowOpacity: 0.4,

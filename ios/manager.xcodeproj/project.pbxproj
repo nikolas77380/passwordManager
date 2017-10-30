@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0041A0601FA72A4500BC013A /* libRNClipboard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0041A05E1FA729A200BC013A /* libRNClipboard.a */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
@@ -90,6 +91,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = ADD01A681E09402E00F6D226;
 			remoteInfo = "RCTBlob-tvOS";
+		};
+		0041A05D1FA729A200BC013A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0041A0591FA729A200BC013A /* RNClipboard.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 93D925B51B577A3A0021F250;
+			remoteInfo = RNClipboard;
 		};
 		00C302AB1ABCB8CE00DB3ED1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -290,6 +298,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0041A0591FA729A200BC013A /* RNClipboard.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNClipboard.xcodeproj; path = "../node_modules/react-native-clipboard/RNClipboard.xcodeproj"; sourceTree = "<group>"; };
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
@@ -333,6 +342,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0041A0601FA72A4500BC013A /* libRNClipboard.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -390,6 +400,21 @@
 				001292161F9A29AC00931AEF /* libBVLinearGradient.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0041A05A1FA729A200BC013A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0041A05E1FA729A200BC013A /* libRNClipboard.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0041A05F1FA72A4500BC013A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		00C302A81ABCB8CE00DB3ED1 /* Products */ = {
@@ -523,6 +548,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0041A0591FA729A200BC013A /* RNClipboard.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -558,6 +584,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				FD7E982BD7E84239AAC71696 /* Resources */,
 				001291E71F9A29AB00931AEF /* Recovered References */,
+				0041A05F1FA72A4500BC013A /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -759,6 +786,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = 0041A05A1FA729A200BC013A /* Products */;
+					ProjectRef = 0041A0591FA729A200BC013A /* RNClipboard.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -818,6 +849,13 @@
 			fileType = archive.ar;
 			path = "libRCTBlob-tvOS.a";
 			remoteRef = 003B092A1F99E5F30063E05D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0041A05E1FA729A200BC013A /* libRNClipboard.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNClipboard.a;
+			remoteRef = 0041A05D1FA729A200BC013A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */ = {

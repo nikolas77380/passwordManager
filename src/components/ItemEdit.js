@@ -22,8 +22,8 @@ class ItemEdit extends Component {
   }
 
   onButtonPress() {
-    const { site, login, sitePassword } = this.props;
-    this.props.itemSaving({ site, login, sitePassword, uid: this.props.navigationState.site.uid });
+    const { site, login, sitePasswordFree } = this.props;
+    this.props.itemSaving({ site, login, sitePasswordFree, uid: this.props.navigationState.site.uid });
   }
 
   render() {
@@ -33,7 +33,7 @@ class ItemEdit extends Component {
           <ItemForm {...this.props} />
           <CardSection>
             <Button onPress={this.onButtonPress.bind(this)}>
-              Update
+              SAVE
             </Button>
           </CardSection>
         </Card>
@@ -45,7 +45,7 @@ class ItemEdit extends Component {
 const mapStateToProps = (state) => {
   const { site, login, sitePassword } = state.formFields;
 
-  return { site, login, sitePassword };
+  return { site, login, sitePasswordFree: sitePassword };
 };
 
 export default connect(mapStateToProps, { itemUpdate, itemSaving })(ItemEdit);

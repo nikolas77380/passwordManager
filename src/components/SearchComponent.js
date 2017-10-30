@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-end',
     width: 100,
-    height: 30
+    height: 30,
+    marginTop: 5
   },
   SearchIcon: {
     color: '#fff',

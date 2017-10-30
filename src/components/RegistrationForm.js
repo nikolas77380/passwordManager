@@ -36,7 +36,7 @@ class RegistrationForm extends Component {
 
     return (
       <Button onPress={this.RegisterUser.bind(this)}>
-        Register
+        SIGN IN
       </Button>
     );
   }
@@ -57,12 +57,12 @@ class RegistrationForm extends Component {
                    backgroundColor: 'transparent'
                 }}
         >
-              PassKiper
+              PassKeeper
         </Text>
         <CardSection>
           <AuthInput
               value={this.props.email}
-              label="email"
+              icon="envelope"
               placeholder="email@gmail.com"
               onChangeText={this.onEmailChange.bind(this)}
           />
@@ -72,7 +72,7 @@ class RegistrationForm extends Component {
           <AuthInput
               value={this.props.password}
               secureTextEntry
-              label="Password"
+              icon="lock"
               placeholder="Password"
               onChangeText={this.onPasswordChange.bind(this)}
           />
@@ -82,7 +82,7 @@ class RegistrationForm extends Component {
           <AuthInput
               value={this.props.ConfirmPassword}
               secureTextEntry
-              label="Password"
+              icon="lock"
               placeholder="Confirm Password"
               onChangeText={this.onConfirmPasswordChange.bind(this)}
           />
@@ -107,7 +107,7 @@ class RegistrationForm extends Component {
                 backgroundColor: 'transparent',
                 marginTop: 150 }}
         >
-          Login
+          LOG IN
         </Text>
         </TouchableOpacity>
         </View>

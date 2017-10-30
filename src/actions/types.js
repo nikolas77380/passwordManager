@@ -16,3 +16,9 @@ export const ITEM_SAVING = 'item_saving';
 export const SEARCH_UPDATE = 'search_update';
 export const LOADING = 'loading';
 export const RESET_FORM = 'reset_form';
+
+//Key actions
+
+export const ADD_KEY = 'add_key';
+export const GET_KEY = 'get_key';
+export const UNSET_KEY = 'unset_key';

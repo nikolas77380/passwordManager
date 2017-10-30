@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 
 const styles = {
@@ -7,15 +7,19 @@ const styles = {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: '#fff'
   },
   labelStyle: {
     fontSize: 18,
     paddingLeft: 20,
-    flex: 1,
     color: '#fff',
     backgroundColor: 'transparent',
+  },
+  labelWrapper: {
+    borderRightWidth: 1,
+    borderColor: '#fff',
+    flex: 1
   },
   InputStyles: {
     color: '#fff',
@@ -26,13 +30,12 @@ const styles = {
     lineHeight: 23,
     flex: 2
   }
-
 };
 
 const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
   return (
     <View style={styles.InputContainerStyle}>
-      <Text style={styles.labelStyle}>{label}</Text>
+      <View style={styles.labelWrapper}><Text style={styles.labelStyle}>{label}</Text></View>
       <TextInput
         autoCapitalize="none"
         secureTextEntry={secureTextEntry}
